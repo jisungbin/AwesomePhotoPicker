@@ -1,7 +1,6 @@
 package me.sungbin.awesomephotopicker.library.adapter
 
 import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.NonNull
@@ -27,7 +26,6 @@ class PhotoAdapter(
 
         fun bindViewHolder(tile: Tile) {
             with(binding) {
-                Log.w("AAAAA", tile.uri.toString())
                 when (tile.type) {
                     TileType.PHOTO -> {
                         ivPhoto.setImageURI(tile.uri)

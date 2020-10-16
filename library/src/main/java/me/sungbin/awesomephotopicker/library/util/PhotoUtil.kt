@@ -4,7 +4,6 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
-import android.util.Log
 
 
 /**
@@ -29,10 +28,9 @@ object PhotoUtil {
             while (cursor.moveToNext()) {
                 val imageId = cursor.getLong(columnIndexId).toString()
                 val imageUri = Uri.withAppendedPath(uriExternal, imageId)
-                Log.w("AAAA", imageUri.toString())
                 list.add(imageUri)
                 index++
-                if (index >= 20) break
+                if (index > 20) break
             }
             cursor.close()
         }
