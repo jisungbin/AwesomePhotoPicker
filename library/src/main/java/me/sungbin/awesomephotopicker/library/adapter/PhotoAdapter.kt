@@ -36,7 +36,7 @@ class PhotoAdapter(
                             .load(PhotoUtil.convertUriToPath(ivTilePhoto.context, tile.uri!!))
                             .thumbnail(0.1f)
                             .apply(
-                                RequestOptions().centerCrop()
+                                RequestOptions().centerInside()
                                     .placeholder(R.drawable.ic_baseline_photo_library_24)
                                     .error(R.drawable.ic_baseline_error_24)
                             )

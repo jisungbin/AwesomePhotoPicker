@@ -1,10 +1,5 @@
 package me.sungbin.awesomephotopicker.library.view.ui
 
-
-/**
- * Created by SungBin on 2020-10-16.
- */
-
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -24,6 +19,10 @@ import me.sungbin.awesomephotopicker.library.util.PhotoFilter
 import me.sungbin.awesomephotopicker.library.util.PhotoUtil
 import kotlin.properties.Delegates
 
+
+/**
+ * Created by SungBin on 2020-10-16.
+ */
 
 class AwesomePhotoPicker : BottomSheetDialogFragment() {
 
