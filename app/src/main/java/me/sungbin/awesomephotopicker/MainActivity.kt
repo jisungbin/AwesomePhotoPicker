@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         btn_test.setOnClickListener {
-            AwesomePhotoPicker().show(supportFragmentManager, "")
+            AwesomePhotoPicker.with().show(supportFragmentManager, "")
         }
     }
 }

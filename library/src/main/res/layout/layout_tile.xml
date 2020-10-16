@@ -17,8 +17,8 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/image_photo"
             android:scaleType="centerInside"
-            tools:scaleType="centerCrop"
-            tools:src="@drawable/sample_image" />
+            android:src="@drawable/ic_baseline_photo_24"
+            tools:scaleType="centerCrop" />
 
         <me.sungbin.awesomephotopicker.library.view.CountCheckBox
             android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package me.sungbin.awesomephotopicker.library.view.ui
+package me.sungbin.awesomephotopicker.library.view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,7 +7,7 @@ import android.view.MotionEvent
 import android.widget.LinearLayout
 
 // https://stackoverflow.com/a/61890073/14299073
-// Fix `Scroll not working for multiple RecyclerView in BottomSheet`
+// Fix `Scroll not working for multiple RecyclerView in BottomSheetDialogFragment`
 class DisallowInterceptView : LinearLayout {
     constructor(context: Context?) : super(context) {
         requestDisallowInterceptTouchEvent(true)

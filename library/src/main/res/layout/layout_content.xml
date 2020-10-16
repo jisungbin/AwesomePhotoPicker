@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <me.sungbin.awesomephotopicker.library.view.ui.DisallowInterceptView
+    <me.sungbin.awesomephotopicker.library.view.DisallowInterceptView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -16,10 +16,7 @@
             android:id="@+id/cl_container_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_default"
-            android:layout_marginTop="@dimen/margin_half"
-            android:layout_marginEnd="@dimen/margin_default"
-            android:layout_marginBottom="@dimen/margin_half"
+            android:layout_margin="@dimen/margin_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -36,9 +33,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btn_done"
-                style="?borderlessButtonStyle"
+            <TextView
+                android:id="@+id/tv_done"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -73,13 +69,13 @@
             android:id="@+id/rv_gallery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
+            android:nestedScrollingEnabled="true"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constrainedHeight="true"
             app:spanCount="3"
             tools:listitem="@layout/layout_tile" />
 
-    </me.sungbin.awesomephotopicker.library.view.ui.DisallowInterceptView>
+    </me.sungbin.awesomephotopicker.library.view.DisallowInterceptView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,4 +42,14 @@ object PhotoUtil {
 
     fun createCustomFileFilter() = true
 
+    @Suppress("DEPRECATION")
+    fun convertUriToPath(context: Context, contentUri: Uri?): String? {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        return context.contentResolver.query(contentUri!!, projection, null, null, null)
+            ?.use { cursor ->
+                val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                cursor.moveToFirst()
+                cursor.getString(columnIndex)
+            }
+    }
 }

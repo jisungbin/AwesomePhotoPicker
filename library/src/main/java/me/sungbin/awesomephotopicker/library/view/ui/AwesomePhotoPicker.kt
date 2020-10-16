@@ -7,14 +7,11 @@ package me.sungbin.awesomephotopicker.library.view.ui
 
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.layout_content.*
@@ -23,36 +20,15 @@ import me.sungbin.awesomephotopicker.library.adapter.PhotoAdapter
 import me.sungbin.awesomephotopicker.library.model.Tile
 import me.sungbin.awesomephotopicker.library.model.TileType
 import me.sungbin.awesomephotopicker.library.util.GridSpacingItemDecoration
+import me.sungbin.awesomephotopicker.library.util.PhotoFilter
 import me.sungbin.awesomephotopicker.library.util.PhotoUtil
+import kotlin.properties.Delegates
 
 
 class AwesomePhotoPicker : BottomSheetDialogFragment() {
 
-    private val bottomSheetBehaviorCallback: BottomSheetCallback = object : BottomSheetCallback() {
-        override fun onStateChanged(@NonNull bottomSheet: View, newState: Int) {
-            Log.w("BBB", "BBBB")
-
-            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                dismissAllowingStateLoss()
-            }
-        }
-
-        override fun onSlide(@NonNull bottomSheet: View, slideOffset: Float) = Unit
-    }
-
-
-    /* @SuppressLint("RestrictedApi")
-     override fun setupDialog(dialog: Dialog, style: Int) {
-         super.setupDialog(dialog, style)
-         val contentView = View.inflate(context, R.layout.layout_content, null)
-         dialog.setContentView(contentView)
-         val layoutParams =
-             (contentView.parent as View).layoutParams as CoordinatorLayout.LayoutParams
-         val behavior = layoutParams.behavior
-         if (behavior != null && behavior is BottomSheetBehavior<*>) {
-             (behavior as BottomSheetBehavior).addBottomSheetCallback(bottomSheetBehaviorCallback)
-         }
-     }*/
+    private var pickerHeight by Delegates.notNull<Float>()
+    private lateinit var photoFilter: PhotoFilter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,26 +39,22 @@ class AwesomePhotoPicker : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val maxHeight = getPopupHeight(.85f)
-        cl_container.maxHeight = maxHeight + 1
+        cl_container.maxHeight = (getPopupHeight(pickerHeight) + 1)
 
         dialog?.setOnShowListener { dialog ->
 
-            val d = dialog as BottomSheetDialog
+            val bottomSheetDialog = dialog as BottomSheetDialog
             val bottomSheet =
-                d.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)!!
+                bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)!!
             val behavior = BottomSheetBehavior.from(bottomSheet)
 
             initLayoutHeight()
 
             behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onSlide(p0: View, p1: Float) {}
-
-                override fun onStateChanged(p0: View, p1: Int) {
-                    when (p1) {
-                        BottomSheetBehavior.STATE_HIDDEN -> {
-                            dismiss()
-                        }
+                override fun onSlide(bottomSheet: View, slide: Float) = Unit
+                override fun onStateChanged(bottomSheet: View, state: Int) {
+                    when (state) {
+                        BottomSheetBehavior.STATE_HIDDEN -> dismiss()
                         else -> Unit
                     }
                 }
@@ -98,20 +70,22 @@ class AwesomePhotoPicker : BottomSheetDialogFragment() {
         rv_gallery.apply {
             adapter = PhotoAdapter(tiles, requireActivity())
             val spacingInPixels = resources.getDimensionPixelSize(R.dimen.margin_half)
-            addItemDecoration(GridSpacingItemDecoration(3, spacingInPixels, true, 0))
+            addItemDecoration(GridSpacingItemDecoration(3, spacingInPixels, false, 0))
         }
     }
 
     private fun getPopupHeight(percent: Float): Int {
         val displayMetrics = DisplayMetrics()
+        // todo: `context?.display?.getRealMetrics(DisplayMetrics())` <- why do not working this code?
+        @Suppress("DEPRECATION")
         activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * percent).toInt()
     }
 
     private fun initLayoutHeight() {
-        val d = dialog as BottomSheetDialog
+        val bottomSheetDialog = dialog as BottomSheetDialog
         val bottomSheet =
-            d.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)!!
+            bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)!!
 
         val behavior = BottomSheetBehavior.from(bottomSheet)
 
@@ -121,7 +95,7 @@ class AwesomePhotoPicker : BottomSheetDialogFragment() {
         }
 
         val params = bottomSheet.layoutParams as CoordinatorLayout.LayoutParams
-        val maxHeight = getPopupHeight(.85f)
+        val maxHeight = getPopupHeight(pickerHeight)
 
         if (maxHeight < bottomSheet.height) {
             params.height = maxHeight
@@ -129,4 +103,21 @@ class AwesomePhotoPicker : BottomSheetDialogFragment() {
             behavior.peekHeight = maxHeight
         }
     }
+
+    companion object {
+        private lateinit var awesomePhotoPicker: AwesomePhotoPicker
+
+        fun with(
+            pickerHeight: Float = .85f,
+            photoFilter: PhotoFilter = PhotoFilter()
+        ): AwesomePhotoPicker {
+            if (!::awesomePhotoPicker.isInitialized) {
+                awesomePhotoPicker = AwesomePhotoPicker()
+            }
+            awesomePhotoPicker.pickerHeight = pickerHeight
+            awesomePhotoPicker.photoFilter = photoFilter
+            return awesomePhotoPicker
+        }
+    }
+
 }
