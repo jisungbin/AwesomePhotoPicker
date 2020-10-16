@@ -90,6 +90,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_divide"
         app:spanCount="3"
-        tools:listitem="@layout/layout_photo" />
+        tools:listitem="@layout/layout_tile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

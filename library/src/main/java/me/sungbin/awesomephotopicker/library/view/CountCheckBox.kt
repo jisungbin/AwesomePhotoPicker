@@ -9,7 +9,7 @@ import me.sungbin.awesomephotopicker.library.R
 
 
 /**
- * Created by SungBin on 2020-07-26.
+ * Created by SungBin on 2020-10-16.
  */
 
 class CountCheckBox : FrameLayout {
