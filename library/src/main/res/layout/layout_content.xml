@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_container_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_default"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginTop="@dimen/margin_half"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_half"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -42,54 +46,39 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginTop="@dimen/margin_half"
-        android:id="@+id/cl_container_selected_photo"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_selected_photo"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        app:layout_constraintTop_toBottomOf="@+id/cl_container_title">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_selected_photo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/layout_selected_image" />
-
-        <TextView
-            android:id="@+id/rv_selected_photo_empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/dialog_no_photo"
-            android:textColor="?attr/colorAccent"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:textColor="@color/colorBlack" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="@dimen/margin_half"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/layout_selected_image" />
 
     <View
         android:id="@+id/view_divide"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorGray"
-        app:layout_constraintTop_toBottomOf="@+id/cl_container_selected_photo" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_selected_photo" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_gallery"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_divide"
-        app:spanCount="3"
-        tools:listitem="@layout/layout_tile" />
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
+            android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            tools:listitem="@layout/layout_tile" />
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

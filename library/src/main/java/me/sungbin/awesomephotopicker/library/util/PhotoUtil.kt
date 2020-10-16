@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 
 
 /**
@@ -13,29 +14,34 @@ import android.provider.MediaStore
 object PhotoUtil {
     fun getAllPath(
         context: Context,
-        fileExtensionsFilter: FileExtensions,
-        customFileFilter: FileExtensions // todo: filter
+        fileExtensionsFilter: FileExtensions? = null,
+        customFileFilter: FileExtensions? = null // todo: filter
     ): ArrayList<Uri> {
         val uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val cursor: Cursor?
-        val columnIndexId: Int
         val list = ArrayList<Uri>()
         val projection = arrayOf(MediaStore.Images.Media._ID)
-        cursor = context.contentResolver.query(uriExternal, projection, null, null, null)
+        val orderBy = MediaStore.Images.Media.DATE_ADDED + " DESC"
+        cursor = context.contentResolver.query(uriExternal, projection, null, null, orderBy)
         cursor?.let {
-            columnIndexId = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+            val columnIndexId = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+            var index = 0
             while (cursor.moveToNext()) {
                 val imageId = cursor.getLong(columnIndexId).toString()
                 val imageUri = Uri.withAppendedPath(uriExternal, imageId)
+                Log.w("AAAA", imageUri.toString())
                 list.add(imageUri)
+                index++
+                if (index >= 20) break
             }
             cursor.close()
         }
         return list
     }
 
-    fun getFileExtension(filePath: String) =
+    private fun getFileExtension(filePath: String) =
         filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length)
 
     fun createCustomFileFilter() = true
+
 }
