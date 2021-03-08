@@ -35,8 +35,7 @@ object PhotoUtil {
         return list
     }
 
-    private fun getFileExtension(filePath: String) =
-        filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length)
+    private fun getFileExtension(filePath: String) = filePath.substringAfterLast(".")
 
     fun createCustomFileFilter() = true
 

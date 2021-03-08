@@ -2,9 +2,9 @@ package me.sungbin.awesomephotopicker
 
 import android.Manifest
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import kotlinx.android.synthetic.main.activity_main.*
 import me.sungbin.awesomephotopicker.library.view.ui.AwesomePhotoPicker
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
             1000
         )
 
-        btn_test.setOnClickListener {
+        findViewById<Button>(R.id.btn_test).setOnClickListener {
             AwesomePhotoPicker.with().show(supportFragmentManager, "")
         }
     }

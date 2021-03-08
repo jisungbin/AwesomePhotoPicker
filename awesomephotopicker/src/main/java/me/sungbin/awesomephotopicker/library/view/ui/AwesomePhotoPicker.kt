@@ -9,9 +9,9 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.layout_content.*
 import me.sungbin.awesomephotopicker.library.R
 import me.sungbin.awesomephotopicker.library.adapter.PhotoAdapter
+import me.sungbin.awesomephotopicker.library.databinding.LayoutContentBinding
 import me.sungbin.awesomephotopicker.library.model.Tile
 import me.sungbin.awesomephotopicker.library.model.TileType
 import me.sungbin.awesomephotopicker.library.util.GridSpacingItemDecoration
@@ -25,6 +25,9 @@ import kotlin.properties.Delegates
 
 class AwesomePhotoPicker : BottomSheetDialogFragment() {
 
+    private var _binding: LayoutContentBinding? = null
+    private val binding get() = _binding!!
+
     private var pickerHeight by Delegates.notNull<Float>()
     private lateinit var photoFilter: PhotoFilter
 
@@ -32,12 +35,15 @@ class AwesomePhotoPicker : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.layout_content, container, false)!!
+    ): View {
+        _binding = LayoutContentBinding.inflate(inflater)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        cl_container.maxHeight = (getPopupHeight(pickerHeight) + 1)
+        binding.clContainer.maxHeight = (getPopupHeight(pickerHeight) + 1)
 
         dialog?.setOnShowListener { dialog ->
 
@@ -65,7 +71,7 @@ class AwesomePhotoPicker : BottomSheetDialogFragment() {
             tiles.add(Tile(it, TileType.PHOTO))
         }
 
-        rv_gallery.apply {
+        binding.rvGallery.apply {
             adapter = PhotoAdapter(tiles, requireActivity())
             val spacingInPixels = resources.getDimensionPixelSize(R.dimen.margin_twice_half)
             addItemDecoration(GridSpacingItemDecoration(3, spacingInPixels, false, 0))
@@ -100,6 +106,11 @@ class AwesomePhotoPicker : BottomSheetDialogFragment() {
             bottomSheet.layoutParams = params
             behavior.peekHeight = maxHeight
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {
