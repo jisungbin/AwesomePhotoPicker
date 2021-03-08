@@ -19,7 +19,6 @@ import me.sungbin.awesomephotopicker.library.util.PhotoFilter
 import me.sungbin.awesomephotopicker.library.util.PhotoUtil
 import kotlin.properties.Delegates
 
-
 /**
  * Created by SungBin on 2020-10-16.
  */
@@ -57,7 +56,6 @@ class AwesomePhotoPicker : BottomSheetDialogFragment() {
                         else -> Unit
                     }
                 }
-
             })
         }
 
@@ -119,5 +117,4 @@ class AwesomePhotoPicker : BottomSheetDialogFragment() {
             return awesomePhotoPicker
         }
     }
-
 }

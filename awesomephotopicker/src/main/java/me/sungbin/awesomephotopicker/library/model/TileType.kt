@@ -1,6 +1,5 @@
 package me.sungbin.awesomephotopicker.library.model
 
-
 /**
  * Created by SungBin on 2020-10-16.
  */

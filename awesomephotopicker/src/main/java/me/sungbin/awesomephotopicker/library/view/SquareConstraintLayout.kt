@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 
-
 /**
  * Created by SungBin on 2020-10-16.
  */

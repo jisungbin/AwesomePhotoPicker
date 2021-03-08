@@ -5,7 +5,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
 
-
 /**
  * Created by SungBin on 2020-10-16.
  */
